@@ -32,6 +32,9 @@
 ### Spring Async API 
 * spring package
 
+### Retrofit Sync API
+* Infrastructure package
+
 ---
 
 ## References
