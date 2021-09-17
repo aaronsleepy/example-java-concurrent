@@ -4,10 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.socurites.ex.concurrent.spring.domain.User;
 import org.socurites.ex.concurrent.spring.domain.UserService;
+import org.socurites.ex.concurrent.spring.infrastructure.RetrofitUserApi;
+import org.socurites.ex.concurrent.spring.infrastructure.retrofit.RetrofitUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import retrofit2.Call;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Component
 @RequiredArgsConstructor
@@ -15,9 +19,26 @@ import java.util.concurrent.CompletableFuture;
 public class AppRunner implements CommandLineRunner {
     private final UserService userService;
 
+    private final RetrofitUtils retrofitUtils;
+    private final RetrofitUserApi retrofitUserApi;
+
 
     @Override
     public void run(String... args) throws Exception {
+        restTemplateAsnycCall();
+
+        retrofitSyncCall();
+    }
+
+    private void retrofitSyncCall() {
+        Call<User> call1 = retrofitUserApi.findUser("socurites");
+
+        User user1 = retrofitUtils.responseSync(call1).orElseThrow(RuntimeException::new);
+
+        log.info(user1.toString());
+    }
+
+    private void restTemplateAsnycCall() throws InterruptedException, ExecutionException {
         // Call asnyc
         CompletableFuture<User> future1 = userService.findUser("socurites");
         CompletableFuture<User> future2 = userService.findUser("martin");

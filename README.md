@@ -46,3 +46,4 @@
 
 ### Retrofit
 * [[Android] Retrofit 2.0 사용 방법 (Java, Kotlin) - 2. Call 동기, 비동기](https://gwi02379.tistory.com/7)
+* [spring boot 에서 Retrofit 사용해보기](https://nevercaution.github.io/retrofit-with-spring-boot/)
